@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Cards
+    uniqueID: 846818853
+    locked: 0
+  - name: HUD
+    uniqueID: 3603004099
+    locked: 0
