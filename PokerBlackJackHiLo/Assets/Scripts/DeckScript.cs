@@ -32,6 +32,20 @@ public class DeckScript : MonoBehaviour
 
     public void Shuffle()
     {
+        System.Random random = new System.Random();
+
+        for (int i = cardSprites.Length - 1; i > 0; --i)
+        {
+            int j = random.Next(i, cardSprites.Length);
+            Sprite face = cardSprites[i];
+            cardSprites[i] = cardSprites[j];
+            cardSprites[j] = face;
+
+            int value = cardValues[i];
+            cardValues[i] = cardValues[j];
+            cardValues[j] = value;
+        }
+        /*
         for(int i = cardSprites.Length - 1; i > 0; --i)
         {
             int j = Mathf.FloorToInt(Random.Range(0.0f, 1.0f) * cardSprites.Length - 1) + 1;
@@ -42,9 +56,9 @@ public class DeckScript : MonoBehaviour
             int value = cardValues[i];
             cardValues[i] = cardValues[j];
             cardValues[j] = value;
-        }
+        }*/
         currentIndex = 1;
-
+        
     }
     public int DealCard(CardScript cardScript)
     {

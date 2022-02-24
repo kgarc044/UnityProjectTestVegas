@@ -91,7 +91,6 @@ public class GameManager : MonoBehaviour
             if (dealerScript.handValue > 20) RoundOver();
         }
     }
-    // Update is called once per frame
     
     void RoundOver()
     {
@@ -99,7 +98,7 @@ public class GameManager : MonoBehaviour
         bool dealerBust = dealerScript.handValue > 21;
         bool player21 = playerScript.handValue == 21;
         bool dealer21 = dealerScript.handValue == 21;
-        // If stand has been clicked less than twice, no 21s or busts, quit function
+
         if (standClicks < 2 && !playerBust && !dealerBust && !player21 && !dealer21) return;
         bool roundOver = true;
         if (playerBust && dealerBust)
