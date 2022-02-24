@@ -5,27 +5,15 @@ using UnityEngine;
 public class CardScript : MonoBehaviour
 {
     public int value = 0;
-    public string suit = "";
 
     public int GetValueOfCard()
     {
         return value;
     }
 
-
     public void SetValue(int newValue)
     {
         value = newValue;
-    }
-
-    public string GetTypeOfSuit()
-    {
-        return suit;
-    }
-
-    public void SetSuit(string suitName)
-    {
-        suit = suitName;
     }
 
     public void SetSprite(Sprite newSprite)
