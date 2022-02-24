@@ -9,6 +9,7 @@ public class DeckScript : MonoBehaviour
     int[] cardValues = new int[53];
     string[] suitType = new string[53];
     int currentIndex = 0;
+    public bool isPoker;
 
     void Start()
     {
@@ -20,15 +21,31 @@ public class DeckScript : MonoBehaviour
     void GetCardValues()
     {
         int num = 0;
-        for (int i = 0; i < cardSprites.Length; i++)
+        if (isPoker)
         {
-            num = i;
-            num %= 13;
-            if(num > 10 || num == 0)
+            for (int i = 0; i < cardSprites.Length; i++)
             {
-                num = 10;
+                num = i;
+                num %= 13;
+                if(num == 0)
+                {
+                    num = 13;
+                }
+                cardValues[i] = num++;
             }
-            cardValues[i] = num++;
+        }
+        else
+        {
+            for (int i = 0; i < cardSprites.Length; i++)
+            {
+                num = i;
+                num %= 13;
+                if (num > 10 || num == 0)
+                {
+                    num = 10;
+                }
+                cardValues[i] = num++;
+            }
         }
         
     }
@@ -54,7 +71,6 @@ public class DeckScript : MonoBehaviour
             {
                 suitType[i] = "Diamonds";
             }
-            Debug.Log(suitType[i]);
         }
     }
 
