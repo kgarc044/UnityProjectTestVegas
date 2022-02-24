@@ -9,8 +9,6 @@ public class PlayerScript : MonoBehaviour
 
     public int handValue = 0;
 
-    public bool isPoker;
-
     private int money = 1000;
 
     public GameObject[] hand;
@@ -53,10 +51,6 @@ public class PlayerScript : MonoBehaviour
             {
                 ace.SetValue(1);
                 handValue -= 10;
-            }
-            else if(isPoker)
-            {
-                ace.SetValue(14);
             }
         }
     }

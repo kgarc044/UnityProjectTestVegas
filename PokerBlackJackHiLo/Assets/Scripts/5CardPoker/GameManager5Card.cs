@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class GameManager5Card : MonoBehaviour
 {
+    /*
     public Button dealButton;
-    public Button redrawButton;
+    public Button hitButton;
     public Button standButton;
     public Button betButton;
 
@@ -31,7 +32,7 @@ public class GameManager5Card : MonoBehaviour
     void Start()
     {
         dealButton.onClick.AddListener(() => DealClicked());
-        redrawButton.onClick.AddListener(() => RedrawClicked());
+        hitButton.onClick.AddListener(() => HitClicked());
         standButton.onClick.AddListener(() => StandClicked());
         betButton.onClick.AddListener(() => BetClicked());
     }
@@ -41,13 +42,13 @@ public class GameManager5Card : MonoBehaviour
         standClicks++;
         if (standClicks > 1)
         {
-            EvaluateHands();
+            RoundOver();
         }
-        RedrawDealer();
+        HitDealer();
         standButtonText.text = "Call";
     }
 
-    private void RedrawClicked()
+    private void HitClicked()
     {
         if (playerScript.cardIndex <= 10)
         {
@@ -55,7 +56,7 @@ public class GameManager5Card : MonoBehaviour
             scoreText.text = "Hand: " + playerScript.handValue.ToString();
             if (playerScript.handValue > 20)
             {
-                EvaluateHands();
+                RoundOver();
             }
         }
     }
@@ -73,7 +74,7 @@ public class GameManager5Card : MonoBehaviour
         dealerScoreText.text = "Dealer Hand: " + dealerScript.handValue.ToString();
         hideCard.GetComponent<Renderer>().enabled = true;
         dealButton.gameObject.SetActive(false);
-        redrawButton.gameObject.SetActive(true);
+        hitButton.gameObject.SetActive(true);
         standButton.gameObject.SetActive(true);
         standButtonText.text = "Stand";
         pot = 40;
@@ -82,17 +83,17 @@ public class GameManager5Card : MonoBehaviour
         cashText.text = "$" + playerScript.GetMoney().ToString();
     }
 
-    private void RedrawDealer()
+    private void HitDealer()
     {
         while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
             dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
-            if (dealerScript.handValue > 20) EvaluateHands();
+            if (dealerScript.handValue > 20) RoundOver();
         }
     }
 
-    void EvaluateHands()
+    void RoundOver()
     {
         bool playerBust = playerScript.handValue > 21;
         bool dealerBust = dealerScript.handValue > 21;
@@ -132,7 +133,7 @@ public class GameManager5Card : MonoBehaviour
 
         if (roundOver)
         {
-            redrawButton.gameObject.SetActive(false);
+            hitButton.gameObject.SetActive(false);
             standButton.gameObject.SetActive(false);
             dealButton.gameObject.SetActive(true);
             mainText.gameObject.SetActive(true);
@@ -152,4 +153,5 @@ public class GameManager5Card : MonoBehaviour
         pot += (intBet * 2);
         betsText.text = "Bets: $" + pot.ToString();
     }
+    */
 }
