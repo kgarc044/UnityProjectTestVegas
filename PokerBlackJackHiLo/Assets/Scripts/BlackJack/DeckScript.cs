@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeckScript : MonoBehaviour
 {
     public Sprite[] cardSprites;
     int[] cardValues = new int[53];
+    string[] suitType = new string[53];
     int currentIndex = 0;
 
     void Start()
     {
         GetCardValues();
+        GetSuitTypes();
     }
 
     // Update is called once per frame
@@ -30,6 +33,31 @@ public class DeckScript : MonoBehaviour
         
     }
 
+    void GetSuitTypes()
+    {
+        for (int i = 0; i < cardSprites.Length; i++)
+        {
+
+            if (cardSprites[i].name.Contains("Clubs"))
+            {
+                suitType[i] = "Clubs";
+            }
+            else if (cardSprites[i].name.Contains("Hearts"))
+            {
+                suitType[i] = "Hearts";
+            }
+            else if (cardSprites[i].name.Contains("Spades"))
+            {
+                suitType[i] = "Spades";
+            }
+            else if (cardSprites[i].name.Contains("Diamonds"))
+            {
+                suitType[i] = "Diamonds";
+            }
+            Debug.Log(suitType[i]);
+        }
+    }
+
     public void Shuffle()
     {
         System.Random random = new System.Random();
@@ -44,19 +72,11 @@ public class DeckScript : MonoBehaviour
             int value = cardValues[i];
             cardValues[i] = cardValues[j];
             cardValues[j] = value;
-        }
-        /*
-        for(int i = cardSprites.Length - 1; i > 0; --i)
-        {
-            int j = Mathf.FloorToInt(Random.Range(0.0f, 1.0f) * cardSprites.Length - 1) + 1;
-            Sprite face = cardSprites[i];
-            cardSprites[i] = cardSprites[j];
-            cardSprites[j] = face;
 
-            int value = cardValues[i];
-            cardValues[i] = cardValues[j];
-            cardValues[j] = value;
-        }*/
+            string suit = suitType[i];
+            suitType[i] = suitType[j];
+            suitType[j] = suit;
+        }
         currentIndex = 1;
         
     }
@@ -65,7 +85,9 @@ public class DeckScript : MonoBehaviour
 
         cardScript.SetSprite(cardSprites[currentIndex]);
         cardScript.SetValue(cardValues[currentIndex]);
+        cardScript.SetSuit(suitType[currentIndex]);
         currentIndex++;
+        
         return cardScript.GetValueOfCard();
     }
 
