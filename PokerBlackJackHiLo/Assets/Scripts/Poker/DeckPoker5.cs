@@ -22,7 +22,7 @@ public class DeckPoker5 : MonoBehaviour
         {
             num = i;
             num %= 13;
-            if (num == 0 && i == 0)
+            if (num == 0 && (i == 0 || i == 13 || i == 26 || i ==39))
             {
                 num = 0;
             }

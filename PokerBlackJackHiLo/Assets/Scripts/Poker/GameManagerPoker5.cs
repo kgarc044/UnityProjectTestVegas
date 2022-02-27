@@ -20,6 +20,7 @@ public class GameManagerPoker5 : MonoBehaviour
     public Button redraw5;
     public Button confirmRedrawButton;
     public Button dealButton;
+    public Button sortTestButton;
 
     
     private void Start()
@@ -31,8 +32,14 @@ public class GameManagerPoker5 : MonoBehaviour
         redraw4.onClick.AddListener(() => RedrawFourthCard());
         redraw5.onClick.AddListener(() => RedrawFifthCard());
         confirmRedrawButton.onClick.AddListener(() => ConfirmRedraw());
+        sortTestButton.onClick.AddListener(() => SortHand());
     }
 
+    public void SortHand()
+    {
+        playerScript.SortHands();
+        dealerScript.SortHands();
+    }
     public void ConfirmRedraw()
     {
         redrawUI.SetActive(false);
@@ -70,8 +77,7 @@ public class GameManagerPoker5 : MonoBehaviour
         GameObject.Find("Deck").GetComponent<DeckPoker5>().Shuffle();
         playerScript.StartingHands();
         dealerScript.StartingHands();
-        playerScript.SortHands();
-        dealerScript.SortHands();
+        
         redrawUI.SetActive(true);
     }
 }

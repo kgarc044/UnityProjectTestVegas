@@ -40,15 +40,26 @@ public class PlayerPoker5 : MonoBehaviour
             {
                 if(hand[i].GetComponent<CardPropertiesPoker5>().GetValueOfCard() > hand[j].GetComponent<CardPropertiesPoker5>().GetValueOfCard())
                 {
-                    min = j;
-                }
-                if(min != i)
-                {
-                    GameObject temp = hand[i];
-                    hand[i] = hand[j];
-                    hand[j] = temp;
+                    int temp = hand[i].GetComponent<CardPropertiesPoker5>().GetValueOfCard();
+                    hand[i].GetComponent<CardPropertiesPoker5>().SetValue(hand[j].GetComponent<CardPropertiesPoker5>().GetValueOfCard());
+                    hand[j].GetComponent<CardPropertiesPoker5>().SetValue(temp);
+
+                    string tempString = hand[i].GetComponent<CardPropertiesPoker5>().GetSuitOfCard();
+                    hand[i].GetComponent<CardPropertiesPoker5>().SetSuit(hand[j].GetComponent<CardPropertiesPoker5>().GetSuitOfCard());
+                    hand[j].GetComponent<CardPropertiesPoker5>().SetSuit(tempString);
+
+                    Sprite tempSprite = hand[i].GetComponent<SpriteRenderer>().sprite;
+                    hand[i].GetComponent<CardPropertiesPoker5>().SetSprite(hand[j].GetComponent<SpriteRenderer>().sprite);
+                    hand[j].GetComponent<CardPropertiesPoker5>().SetSprite(tempSprite);
+
                 }
             }
         }
+
+        /*
+        cardScript.SetSprite(cardSprites[currentIndex]);
+        cardScript.SetValue(cardValues[currentIndex]);
+        cardScript.SetSuit(cardSuit[currentIndex]);*/
+
     }
 }

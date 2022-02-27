@@ -32,10 +32,6 @@ public class CardPropertiesPoker5 : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().sprite = newSprite;
     }
 
-    public string GetSpriteName()
-    {
-        return GetComponent<SpriteRenderer>().sprite.name;
-    }
 
     public void ResetCard()
     {
