@@ -9,7 +9,6 @@ public class PlayerScript : MonoBehaviour
 
     public int handValue = 0;
 
-    // Betting money
     private int money = 1000;
     public GameObject[] hand;
     public int cardIndex = 0;
@@ -23,9 +22,7 @@ public class PlayerScript : MonoBehaviour
 
     public int GetCard()
     {
-        // Get a card, use deal card to assign sprite and value to card on table
         int cardValue = deckScript.DealCard(hand[cardIndex].GetComponent<CardScript>());
-        // Show card on game screen
         hand[cardIndex].GetComponent<Renderer>().enabled = true;
         handValue += cardValue;
         if (cardValue == 1)
