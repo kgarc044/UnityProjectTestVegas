@@ -13,6 +13,7 @@ public class PlayerPoker5 : MonoBehaviour
     private int diamondSum = 0;
     private int clubSum = 0;
     private int spadesSum = 0;
+    private int money = 1000;
 
     public int highCard;
     public int secondHighCard;
@@ -295,4 +296,15 @@ public class PlayerPoker5 : MonoBehaviour
         }
         return false;
     }
+
+    public void AdjustMoney(int amount)
+    {
+        money += amount;
+    }
+
+    public int GetMoney()
+    {
+        return money;
+    }
+
 }

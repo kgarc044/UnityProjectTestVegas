@@ -6,10 +6,20 @@ using static PlayerPoker5;
 
 public class GameManagerPoker5 : MonoBehaviour
 {
+    public Text mainText;
+    public Text betsText;
+    public Text cashText;
+
     public PlayerPoker5 playerScript;
     public PlayerPoker5 dealerScript;
 
     public GameObject redrawUI;
+    public GameObject hideDealerCards;
+
+    int pot = 0;
+
+    bool roundOver = false;
+    bool finishedBetting = false;
 
     List<int> redrawList = new List<int>();
 
@@ -19,10 +29,12 @@ public class GameManagerPoker5 : MonoBehaviour
     public Button redraw4;
     public Button redraw5;
     public Button confirmRedrawButton;
+    public Button doneFirstBetting;
+    public Button doneSecondBetting;
     public Button dealButton;
-    public Button sortTestButton;
+    public Button betButton;
 
-    
+
     private void Start()
     {
         dealButton.onClick.AddListener(() => DealClicked());
@@ -31,72 +43,40 @@ public class GameManagerPoker5 : MonoBehaviour
         redraw3.onClick.AddListener(() => RedrawThirdCard());
         redraw4.onClick.AddListener(() => RedrawFourthCard());
         redraw5.onClick.AddListener(() => RedrawFifthCard());
+        doneFirstBetting.onClick.AddListener(() => FirstRoundBetting());
+        doneSecondBetting.onClick.AddListener(() => SecondRoundBetting());
         confirmRedrawButton.onClick.AddListener(() => ConfirmRedraw());
-        sortTestButton.onClick.AddListener(() => SortHand());
+        betButton.onClick.AddListener(() => BetClicked());
     }
 
-    public void SortHand()
+    public void FirstRoundBetting()
     {
-        playerScript.SortHands();
-        dealerScript.SortHands();
+        doneFirstBetting.gameObject.SetActive(false);
+        betButton.gameObject.SetActive(false);
+        redraw1.gameObject.SetActive(true);
+        redraw2.gameObject.SetActive(true);
+        redraw3.gameObject.SetActive(true);
+        redraw4.gameObject.SetActive(true);
+        redraw5.gameObject.SetActive(true);
+        redrawUI.SetActive(true);
     }
+    public void SecondRoundBetting()
+    {
+        doneSecondBetting.gameObject.SetActive(false);
+        betButton.gameObject.SetActive(false);
+        EvaluateBothHands();
+    }
+
     public void ConfirmRedraw()
     {
         redrawUI.SetActive(false);
         playerScript.RedrawHand(redrawList);
-
-        EvaluateBothHands();
+        playerScript.SortHands();
+        dealerScript.SortHands();
+        doneSecondBetting.gameObject.SetActive(true);
+        betButton.gameObject.SetActive(true);
     }
-
-    public void EvaluateBothHands()
-    {
-        PokerHand playerHand = playerScript.EvaluateHand();
-        PokerHand dealerHand = dealerScript.EvaluateHand();
-
-        Debug.Log("You have " + playerHand + " and a high card of " + playerScript.highCard);
-        Debug.Log("Dealer has " + dealerHand + " and a high card of " + dealerScript.highCard);
-
-        if (playerHand > dealerHand)
-        {
-            Debug.Log("Player wins!");
-        }
-        else if(playerHand<dealerHand)
-        {
-            Debug.Log("Dealer wins!");
-        }
-        else if (playerHand == dealerHand)
-        {
-            if(playerScript.highCard > dealerScript.highCard)
-            {
-                Debug.Log("Player wins!");
-            }
-            else if (playerScript.highCard < dealerScript.highCard)
-            {
-                Debug.Log("Dealer wins!");
-            }
-            else if (playerScript.highCard == dealerScript.highCard)
-            {
-                if (playerScript.secondHighCard > dealerScript.secondHighCard)
-                {
-                    Debug.Log("Player wins!");
-                }
-                else if (playerScript.secondHighCard < dealerScript.secondHighCard)
-                {
-                    Debug.Log("Dealer wins!");
-                }
-                else
-                {
-                    Debug.Log("Draw! Split the pot.");
-                }
-            }
-            else
-            {
-                Debug.Log("Draw! Split the pot.");
-            }
-        }
-        
-    }
-
+    
     public void RedrawFirstCard()
     {
         redrawList.Add(0);
@@ -125,16 +105,96 @@ public class GameManagerPoker5 : MonoBehaviour
 
     private void DealClicked()
     {
+        hideDealerCards.gameObject.SetActive(true);
+        dealButton.gameObject.SetActive(false);
         redrawList.Clear();
+        mainText.gameObject.SetActive(false);
         GameObject.Find("Deck").GetComponent<DeckPoker5>().Shuffle();
         playerScript.StartingHands();
         dealerScript.StartingHands();
 
-        redraw1.gameObject.SetActive(true);
-        redraw2.gameObject.SetActive(true);
-        redraw3.gameObject.SetActive(true);
-        redraw4.gameObject.SetActive(true);
-        redraw5.gameObject.SetActive(true);
-        redrawUI.SetActive(true);
+        playerScript.SortHands();
+        dealerScript.SortHands();
+
+        pot = 40;
+        betsText.text = "Bets: $" + pot.ToString();
+        playerScript.AdjustMoney(-20);
+        cashText.text = "$" + playerScript.GetMoney().ToString();
+
+        doneFirstBetting.gameObject.SetActive(true);
+        betButton.gameObject.SetActive(true);
+
+    }
+
+    private void BetClicked()
+    {
+        Text newBet = betButton.GetComponentInChildren(typeof(Text)) as Text;
+        int intBet = int.Parse(newBet.text.ToString().Remove(0, 1));
+        playerScript.AdjustMoney(-intBet);
+        cashText.text = "$" + playerScript.GetMoney().ToString();
+        pot += (intBet * 2);
+        betsText.text = "Bets: $" + pot.ToString();
+    }
+
+    public void EvaluateBothHands()
+    {
+        PokerHand playerHand = playerScript.EvaluateHand();
+        PokerHand dealerHand = dealerScript.EvaluateHand();
+        roundOver = true;
+
+        Debug.Log("You have " + playerHand + " and a higher " + playerHand + " of " + playerScript.highCard);
+        Debug.Log("Dealer has " + dealerHand + " and a higher " + dealerHand + " of " + dealerScript.highCard);
+
+        hideDealerCards.gameObject.SetActive(false);
+
+        if (playerHand > dealerHand)
+        {
+            mainText.text = "You win!";
+            playerScript.AdjustMoney(pot);
+        }
+        else if (playerHand < dealerHand)
+        {
+            mainText.text = "Dealer wins!";
+        }
+        else if (playerHand == dealerHand)
+        {
+            if (playerScript.highCard > dealerScript.highCard)
+            {
+                mainText.text = "You win!";
+                playerScript.AdjustMoney(pot);
+            }
+            else if (playerScript.highCard < dealerScript.highCard)
+            {
+                mainText.text = "Dealer wins!";
+            }
+            else if (playerScript.highCard == dealerScript.highCard)
+            {
+                if (playerScript.secondHighCard > dealerScript.secondHighCard)
+                {
+                    mainText.text = "You win!";
+                    playerScript.AdjustMoney(pot);
+                }
+                else if (playerScript.secondHighCard < dealerScript.secondHighCard)
+                {
+                    mainText.text = "Dealer wins!";
+                }
+                else
+                {
+                    mainText.text = "Draw! Split the pot.";
+                    playerScript.AdjustMoney(pot / 2);
+                }
+            }
+            else
+            {
+                mainText.text = "Draw! Split the pot.";
+                playerScript.AdjustMoney(pot / 2);
+            }
+        }
+
+        if(roundOver)
+        {
+            mainText.gameObject.SetActive(true);
+            dealButton.gameObject.SetActive(true);
+        }
     }
 }
