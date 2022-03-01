@@ -4876,6 +4876,8 @@ MonoBehaviour:
   hideFourthCard: {fileID: 578668814}
   hideFifthCard: {fileID: 312497512}
   removeButtons: {fileID: 970215080}
+  originalHandPlayer: {fileID: 422357180}
+  originalHandDealer: {fileID: 1399859362}
   doneFirstBetting: {fileID: 289195072}
   doneSecondBetting: {fileID: 897493911}
   doneThirdBetting: {fileID: 965172794}
