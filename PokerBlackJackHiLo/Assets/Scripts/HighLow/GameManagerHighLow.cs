@@ -32,6 +32,7 @@ public class GameManagerHighLow : MonoBehaviour
 
     private void DealClicked()
     {
+        betButton.gameObject.SetActive(true);
         dealButton.gameObject.SetActive(false);
         mainText.gameObject.SetActive(false);
         userGuess = "";
@@ -62,6 +63,7 @@ public class GameManagerHighLow : MonoBehaviour
         lowerButton.gameObject.SetActive(false);
         higherButton.gameObject.SetActive(false);
         CheckIfWon(playerScript.EvaluateGuess(userGuess));
+        betButton.gameObject.SetActive(false);
     }
 
     private void HigherClicked()
@@ -70,6 +72,7 @@ public class GameManagerHighLow : MonoBehaviour
         lowerButton.gameObject.SetActive(false);
         higherButton.gameObject.SetActive(false);
         CheckIfWon(playerScript.EvaluateGuess(userGuess));
+        betButton.gameObject.SetActive(false);
     }
 
     public void CheckIfWon(bool correct)

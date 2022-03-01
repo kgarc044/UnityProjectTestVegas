@@ -18,7 +18,6 @@ public class GameManagerPoker7 : MonoBehaviour
     public GameObject hideSecondCard;
     public GameObject hideThirdCard;
     public GameObject hideFourthCard;
-    public GameObject hideFifthCard;
 
     public GameObject removeButtons;
     public GameObject originalHandPlayer;
@@ -36,7 +35,6 @@ public class GameManagerPoker7 : MonoBehaviour
     public Button doneSecondBetting;
     public Button doneThirdBetting;
     public Button doneFourthBetting;
-    public Button doneFifthBetting;
     public Button dealButton;
     public Button betButton;
     public Button confirmRemoveButton;
@@ -68,7 +66,6 @@ public class GameManagerPoker7 : MonoBehaviour
         doneSecondBetting.onClick.AddListener(() => SecondRoundBetting());
         doneThirdBetting.onClick.AddListener(() => ThirdRoundBetting());
         doneFourthBetting.onClick.AddListener(() => FourthRoundBetting());
-        doneFifthBetting.onClick.AddListener(() => FifthRoundBetting());
         betButton.onClick.AddListener(() => BetClicked());
     }
 
@@ -160,13 +157,6 @@ public class GameManagerPoker7 : MonoBehaviour
     {
         hideFourthCard.gameObject.SetActive(false);
         doneFourthBetting.gameObject.SetActive(false);
-        doneFifthBetting.gameObject.SetActive(true);
-    }
-
-    public void FifthRoundBetting()
-    {
-        hideFifthCard.gameObject.SetActive(false);
-        doneFifthBetting.gameObject.SetActive(false);
         removeButtons.SetActive(true);
         confirmRemoveButton.gameObject.SetActive(true);
         chooseToRemove1.gameObject.SetActive(true);
@@ -176,7 +166,10 @@ public class GameManagerPoker7 : MonoBehaviour
         chooseToRemove5.gameObject.SetActive(true);
         chooseToRemove6.gameObject.SetActive(true);
         chooseToRemove7.gameObject.SetActive(true);
+
+        betButton.gameObject.SetActive(false);
     }
+
 
     private void DealClicked()
     {
@@ -190,7 +183,6 @@ public class GameManagerPoker7 : MonoBehaviour
         hideSecondCard.gameObject.SetActive(true);
         hideThirdCard.gameObject.SetActive(true);
         hideFourthCard.gameObject.SetActive(true);
-        hideFifthCard.gameObject.SetActive(true);
 
         dealButton.gameObject.SetActive(false);
         removeList.Clear();
