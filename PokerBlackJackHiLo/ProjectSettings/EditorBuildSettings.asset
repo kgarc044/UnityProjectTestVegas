@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/MainMenu.unity
+    guid: 528201d98be3a774782d61f2a2b20859
+  - enabled: 1
+    path: Assets/Scenes/HighLow.unity
+    guid: 6cb372629252db346970902f3fbebf1d
+  - enabled: 1
+    path: Assets/Scenes/BlackJack.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Poker5.unity
+    guid: fe5d97642870564479b5b5ef9a94cbfe
+  - enabled: 1
+    path: Assets/Scenes/Poker7.unity
+    guid: 9b83a4d2206d3f74da44ac66d5e2ce69
   m_configObjects: {}
