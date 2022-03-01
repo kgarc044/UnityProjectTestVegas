@@ -142,8 +142,8 @@ public class GameManagerPoker5 : MonoBehaviour
         PokerHand dealerHand = dealerScript.EvaluateHand();
         roundOver = true;
 
-        Debug.Log("You have " + playerHand + " and a higher " + playerHand + " of " + playerScript.highCard);
-        Debug.Log("Dealer has " + dealerHand + " and a higher " + dealerHand + " of " + dealerScript.highCard);
+        Debug.Log("You have " + playerHand + " and a high " + playerHand + " of " + playerScript.highCard);
+        Debug.Log("Dealer has " + dealerHand + " and a high " + dealerHand + " of " + dealerScript.highCard);
 
         hideDealerCards.gameObject.SetActive(false);
 
