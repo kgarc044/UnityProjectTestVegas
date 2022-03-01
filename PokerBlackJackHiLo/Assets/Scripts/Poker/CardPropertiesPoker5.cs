@@ -31,4 +31,6 @@ public class CardPropertiesPoker5 : MonoBehaviour
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = newSprite;
     }
+
+
 }

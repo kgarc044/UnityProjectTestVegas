@@ -8,6 +8,8 @@ public class PlayerHighLow : MonoBehaviour
     public CardPropertiesPoker5 cardScript;
     public DeckHighLow deckScript;
     int cardIndex = 0;
+    private int money = 1000;
+    string correctAnswer;
 
     public bool cardIsLower = false;
 
@@ -21,18 +23,36 @@ public class PlayerHighLow : MonoBehaviour
 
     public bool EvaluateGuess(string userGuess)
     {
-        cardIsLower = IsInitialCardLower();
-        return cardIsLower;
-    }
+        int initial = hand[0].GetComponent<CardPropertiesPoker5>().GetValueOfCard();
+        int guessCard = hand[1].GetComponent<CardPropertiesPoker5>().GetValueOfCard();
 
-    public bool IsInitialCardLower()
-    {
-        if (hand[0].GetComponent<CardPropertiesPoker5>().GetValueOfCard() < hand[1].GetComponent<CardPropertiesPoker5>().GetValueOfCard()) {
+        if(initial < guessCard)
+        {
+            correctAnswer = "Higher";
+        }
+        else
+        {
+            correctAnswer = "Lower";
+        }
+
+        if (correctAnswer == userGuess)
+        {
             return true;
         }
         else
         {
             return false;
         }
+        
+    }
+
+    public void AdjustMoney(int amount)
+    {
+        money += amount;
+    }
+
+    public int GetMoney()
+    {
+        return money;
     }
 }
